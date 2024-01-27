@@ -35,11 +35,11 @@ h5 {font-size: 1.333rem; /* 21.28px */}
 
 small {font-size: 0.750rem; /* 12px */}
 
-.App {
+.CourseList {
   text-align: center;
 }
 
-.App-header {
+.CourseList-header {
   background-color: var(--background);
   min-height: 100vh;
   display: flex;
