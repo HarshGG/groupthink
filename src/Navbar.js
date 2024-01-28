@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isMobile ? 'mobile' : ''}`}>
       <div className="nav-container">
-        <a href="/" className="nav-logo">Logo</a>
+        <a href="/" className="nav-logo">Groupthink</a>
         <div className="nav-icon" onClick={handleToggle}>
           <FaBars />
         </div>

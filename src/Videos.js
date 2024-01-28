@@ -7,6 +7,9 @@ function Videos({prompt}) {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
 
+    let vidIds = JSON.parse(localStorage.getItem('content'))['Youtube']
+    let vidNames = JSON.parse(localStorage.getItem('content'))['YoutubeNames']
+    
     var opts = {
         height: '200',
         width: '300',
@@ -41,9 +44,15 @@ function Videos({prompt}) {
             <p>{data.Youtube ?
                 <div className="VideosContainer">
                     <div className="Videos">
-                        {data.Youtube.map((videoId, index) => (
+                        {/* {data.Youtube.map((videoId, index) => (
                             <div className="YouTubeContainer" key={index}>
                                 <h5>{data.YoutubeNames[index]}</h5>
+                                <YouTube videoId={videoId} opts={opts} />
+                            </div>
+                        ))} */}
+                        {vidIds.map((videoId, index) => (
+                            <div className="YoutubeContainer" key={index}>
+                                <h5>{vidNames[index]}</h5>
                                 <YouTube videoId={videoId} opts={opts} />
                             </div>
                         ))}
