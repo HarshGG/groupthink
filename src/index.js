@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Room from "./Room";
 import Test from './Test';
 import Navbar from './Navbar';
+import Lemonade from "./pages/Lemonade"
 
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(
@@ -24,6 +25,7 @@ root.render(
       <Route path="/" element={<Preferences />} />
       <Route path="/room" element={<Room />} />
       <Route path="/test" element={<Test />} />
+      <Route path="/lemonade" element={<Lemonade />} />
     </Routes>
   </Router>,
 
