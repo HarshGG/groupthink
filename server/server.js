@@ -16,11 +16,11 @@ const PORT = 3001;
 
 
 // Create an instance of OpenAI
-/*
+
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
-*/
+
 
 
 asst_ids = [];
@@ -495,7 +495,7 @@ async function Youtube(searchPrompt) {
   return [videoIds, videoNames];
 }
 
-async function Content(topic, background, question1, answer1, question2, answer2, res) {
+async function Content(topic, background, question1, answer1, question2, answer2) {
   try {
     const assistant = await openai.beta.assistants.create({
       name: "Headlines generator",
@@ -563,6 +563,62 @@ async function Content(topic, background, question1, answer1, question2, answer2
 
 }
 
+app.post('/api/generate-subtopic', async (req, res) => {
+  try {
+    const {headlines, number, background} = req.body
+    const assistant = await openai.beta.assistants.create({
+      name: "Headlines generator",
+      instructions: `you will be generating detailed course content for a user on a step of a multi-step learning process. Keep it detailed, and keep the tone casual but informative. the user's background is ${background}`,
+      model: "gpt-4"
+    });    
+    asst_ids.push(assistant.id);
+    const thread = await openai.beta.threads.create();
+    const prompt = `given the 10 headlines below, generate course content for headline number ${number}. You may assume that the user has completed the steps before it if there are any. Be detailed and generate a few paragraphs. Headlines: ${headlines}`;
+    const message = await openai.beta.threads.messages.create(
+      thread.id,
+      {
+          role: "user",
+          content: prompt
+      }
+    )
+    // console.log('message\n', message.content[0].text)
+    const run = await openai.beta.threads.runs.create(
+        thread.id,
+        {
+            assistant_id: assistant.id,
+        }
+    )
+    // console.log(thread)
+    console.log("thread done\n")
+    const ran = await openai.beta.threads.runs.retrieve(
+      thread.id, run.id
+    )
+    // console.log(ran)
+    console.log("waiting for openai response")
+
+    while(true) {
+        const ran = await openai.beta.threads.runs.retrieve(
+            thread.id, run.id
+        )
+        if(ran.status == 'completed') {
+            console.log(ran.status);
+            break;
+        }
+    }
+
+    const messages = await openai.beta.threads.messages.list(
+        thread.id
+    );
+
+
+    for (const message of messages.body.data) {
+      console.log(message)
+    }
+  } catch (error) {
+    throw error;
+  }
+});
+
 async function QA(topics) {
   return "QA";
 }
@@ -589,7 +645,7 @@ app.post('/api/getTopicData', async (req, res) => {
   // }
   // if (contentTypes.includes("Content")) {
   try {
-    outputs["Content"] = await Content(topic, background, question1, answer1, question2, answer2, res);
+    outputs["Content"] = await Content(topic, background, question1, answer1, question2, answer2);
     // }
     // if (contentTypes.includes("QA")) {
     //   outputs["QA"] = QA(topic);
