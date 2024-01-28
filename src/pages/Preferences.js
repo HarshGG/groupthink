@@ -3,6 +3,7 @@ import totalScreens from '../assets/constants';
 import './Preferences.css'; // This file is for your styles
 import {firestore} from "../assets/firebase";
 import {addDoc, collection} from "@firebase/firestore";
+import {Link} from 'react-router-dom'
 
 class Preferences extends React.Component {
     constructor(props) {
@@ -302,7 +303,12 @@ class Preferences extends React.Component {
           onChange={props.handleChange}
           />      
       </div>
-      <button className="btn btn-success btn-block">Sign up</button>
+
+      {/* <button className="btn btn-success btn-block">Sign up</button> */}
+      <Link to={{
+        pathname: "/courses",
+        state: {myState: 'ljdfhsdljf'}
+      }}>Go to home</Link>
       </React.Fragment>
     );
   }
