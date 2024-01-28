@@ -99,8 +99,9 @@ class Preferences extends React.Component {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
+                console.log(data);
                 localStorage.setItem('content', JSON.stringify(data));
+                localStorage.setItem('background', background);
             })
             .catch(error => console.error('Error:', error));
 

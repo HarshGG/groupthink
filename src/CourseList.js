@@ -13,8 +13,10 @@ function CourseList({pageTitle, thumbnails}) {
     content = {};
   }
 
-  let handleClick = (courseName, index) => {
-    localStorage.setItem(JSON.stringify({selectedTopic: courseName, selectTopicIndex: index}));
+  let handleClick = (e, index) => {
+    e.preventDefault();
+    localStorage.setItem("selectedTopic", index);
+    window.location.href = '/course';
   }
 
   const handleInputChange = (event) => {
@@ -36,7 +38,7 @@ function CourseList({pageTitle, thumbnails}) {
         {/* <CourseThumbnail courseName="NumPy" />
         <CourseThumbnail courseName="Finance" />
         <CourseThumbnail courseName="Business Law" /> */}
-        {Object.keys(content).map((subtopic, i) => (<Link to="/course" onClick={() => {this.handleClick(content[subtopic], i)}}><CourseThumbnail courseName={content[subtopic]} /></Link>))}
+        {Object.keys(content).map((subtopic, i) => (<Link to="/course" onClick={(e) => {this.handleClick(e, i)}}><CourseThumbnail courseName={content[subtopic]} /></Link>))}
       </div>
     </div>
   );
