@@ -348,7 +348,7 @@ app.post('/api/carousel', async (req, res) => {
 });
 
 async function Youtube(searchPrompt) {
-  var useRealData = false;
+  var useRealData = true;
 
   const apiKey = 'AIzaSyDp29FG3nd8fyuu_CL2m1OfokMkQldz7-0';
 

@@ -36,15 +36,12 @@ function TopicPageGenerator() {
           body: JSON.stringify(carouselData),
         });
         const carouselResult = await carouselResponse.json();
-        console.log(carouselResult);
         setData(result); // Set the data to state
         setCaro(carouselResult);
+        console.log(caro)
       } catch (error) {
         console.error('Error:', error);
       }
-
-
-
     }
 
     fetchData();

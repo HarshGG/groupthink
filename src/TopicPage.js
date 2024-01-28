@@ -24,7 +24,6 @@ function TopicPage({ pageTitle, summarySubtitles, summaryContents, carouselDataT
 
             <h2 className="TopicPage-subtitle">Flashcards</h2>
             <Carousel data={carouselDataToPass}/>
-
             <h2 className="TopicPage-subtitle">Related Videos</h2>
             <Videos prompt={pageTitle} />
 
