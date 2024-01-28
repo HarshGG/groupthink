@@ -16,11 +16,9 @@ const PORT = 3001;
 
 
 // Create an instance of OpenAI
-/*
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
-*/
 
 
 asst_ids = [];
@@ -583,9 +581,9 @@ app.post('/api/getTopicData', async (req, res) => {
   //   outputs["FlashCards"] = await FlashCards(topic);
   // }
   // if (contentTypes.includes("Youtube")) {
-  //   var [id, names] = await Youtube(topic);
-  //   outputs["Youtube"] = id;
-  //   outputs["YoutubeNames"] = names;
+    var [id, names] = await Youtube(topic);
+    outputs["Youtube"] = id;
+    outputs["YoutubeNames"] = names;
   // }
   // if (contentTypes.includes("Content")) {
   try {

@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CourseList from "./CourseList";
 import CourseThumbnail from './CourseThumbnail';
 import TopicPage from './TopicPage';
-import Test from './Test';
+import Videos from './Videos';
 import Navbar from './Navbar';
 import Contact from './Contact';
 import Profile from './Profile';
@@ -26,7 +26,7 @@ root.render(
     <Navbar />
     <Routes>
       <Route path="/" element={<Preferences />} />
-      <Route path="/test" element={<Test />} />
+      <Route path="/videos" element={<Videos />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/courses" element={<CourseList pageTitle="Courses" thumbnails={[<CourseThumbnail courseName="NumPy" />, <CourseThumbnail courseName="Finance" />, <CourseThumbnail courseName="Business Law" />]} />} />
