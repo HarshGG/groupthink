@@ -135,7 +135,9 @@ class Preferences extends React.Component {
         </button>
       )
     }
-    return null;
+    return (
+      <div></div>
+    );
   }
 
   nextButton() {
@@ -155,7 +157,7 @@ class Preferences extends React.Component {
         <button
           className="btn btn-primary float-right"
           type="button" onClick={this.handleSubmit}>
-          Get Started
+          Get Started!
         </button>
       )
     }
@@ -193,7 +195,7 @@ class Preferences extends React.Component {
 
     return (
       <React.Fragment>
-        <h1>Your Preferences</h1>
+        <h2>Your Preferences</h2>
         {!isFinalStep && (
           <>
             <form onSubmit={this.handleSubmit}>
@@ -223,9 +225,11 @@ class Preferences extends React.Component {
                 answer2={this.state.answer2}
                 question2={this.state.question2}
               />
+            </form>
+            <div class="buttonContainer">
               {this.previousButton()}
               {this.nextButton()}
-            </form>
+            </div>
           </>
         )}
         {isFinalStep && (
