@@ -13,8 +13,8 @@ function CourseList({pageTitle, thumbnails}) {
     content = {};
   }
 
-  let handleClick = (courseName) => {
-    localStorage.setItem(JSON.stringify({selectedTopic: courseName}));
+  let handleClick = (courseName, index) => {
+    localStorage.setItem(JSON.stringify({selectedTopic: courseName, selectTopicIndex: index}));
   }
 
   const handleInputChange = (event) => {
@@ -36,7 +36,7 @@ function CourseList({pageTitle, thumbnails}) {
         {/* <CourseThumbnail courseName="NumPy" />
         <CourseThumbnail courseName="Finance" />
         <CourseThumbnail courseName="Business Law" /> */}
-        {Object.keys(content).map((subtopic, i) => (<Link to="/course" onClick={() => {this.handleClick(content[subtopic])}}><CourseThumbnail courseName={content[subtopic]} /></Link>))}
+        {Object.keys(content).map((subtopic, i) => (<Link to="/course" onClick={() => {this.handleClick(content[subtopic], i)}}><CourseThumbnail courseName={content[subtopic]} /></Link>))}
       </div>
     </div>
   );
