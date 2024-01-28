@@ -1,0 +1,24 @@
+
+button {
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: #5095b6;
+}
+
+.form-group {
+    align-items: center;
+    text-align: center;
+}
+
+label {
+    font-size: large;
+}
+
+.labels {
+    text-align: left;
+}
+
+input {
+    padding: 30px;
+    font-size: large;
+}
