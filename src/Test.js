@@ -25,7 +25,7 @@ function Test() {
     
     return (
         <div>
-            <p>{videoIds[1]}</p>
+            <p>{videoIds[0]}</p>
         </div>
     );
 }
