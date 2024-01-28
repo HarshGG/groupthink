@@ -27,29 +27,29 @@ class Preferences extends React.Component {
       })    
     }
      
-    handleSubmit = event => {
-      event.preventDefault()
+    handleSubmit = async (event) => {
       const { name, topic, background, question1, answer1, question2, answer2 } = this.state
-      alert(`Your registration detail: \n 
-             Name: ${name} \n 
-             Topic: ${topic} \n
-             Background: ${background} \n
-             Answer1: ${answer1} \n
-             Answer2: ${answer2}`)
-
-      const ref = collection(firestore, "account");
-
-      let data = {
-        name: name,
-        topic: topic,
-        background: background,
-        question1: question1,
-        answer1: answer1,
-        question2: question2,
-        answer2: answer2,
+      const topicDataInput = {
+        name: name, 
+        topic: topic, 
+        background: background, 
+        question1: question1, 
+        question2: question2, 
+        answer1: answer1, 
+        answer2: answer2
       };
-
-      addDoc(ref, data);
+      await fetch("http://localhost:3001/api/getTopicData", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify(topicDataInput),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error => console.error('Error:', error));
 
     }
     
@@ -63,7 +63,7 @@ class Preferences extends React.Component {
           topic: topic,
           background: background
         }
-        await fetch('http://localhost:3001/generate-questions', {
+        await fetch('http://localhost:3001/api/generate-questions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -121,9 +121,42 @@ class Preferences extends React.Component {
         Next
         </button>        
       )
+    } else {
+      return (
+        <button
+        className="btn btn-primary float-right"
+        type="button" onClick={this.handleSubmit}>
+          Get Started
+        </button>
+      )
     }
     return null;
   }
+
+  async fetchTopicData() {
+    const { name, topic, background, question1, answer1, question2, answer2 } = this.state
+    const topicDataInput = {
+      name: name, 
+      topic: topic, 
+      background: background, 
+      question1: question1, 
+      question2: question2, 
+      answer1: answer1, 
+      answer2: answer2
+    };
+    await fetch("https://localhost:3000/api/getTopicData", {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+        },
+      body: JSON.stringify(topicDataInput),
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data)
+      })
+      .catch(error => console.error('Error:', error));
+    }
     
     render() {    
       return (

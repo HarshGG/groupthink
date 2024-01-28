@@ -23,15 +23,15 @@ const openai = new OpenAI({
 
 
 
-asst_id = "";
+asst_ids = [];
 
-app.post('/generate-questions', async (req, res) => {
+app.post('/api/generate-questions', async (req, res) => {
     const assistant = await openai.beta.assistants.create({
         name: "Question generator",
         instructions: "you generate insightful follow up questions to help learn more about the user's learning objectives given a topic and the users background. questions are returned in json",
         model: "gpt-4-1106-preview"
       });    
-    asst_id = assistant.id;
+    asst_ids.push(assistant.id);
     const thread = await openai.beta.threads.create();
 
     try {
@@ -282,9 +282,9 @@ app.get('/api/youtubelinks', async (req, res) => {
 });
 
 
-async function Summary(topic, context) {
+async function Summary(topic, background) {
   const prompt = `Given the topic ${topic} and the associated subtopics ${topic} and your task is to create 1-3 
-  paragraphs of introductory content that caters to the following audience: ${context}.`;
+  paragraphs of introductory content that caters to the following audience: ${background}.`;
   return "summary";
 }
 
@@ -495,8 +495,72 @@ async function Youtube(searchPrompt) {
   return [videoIds, videoNames];
 }
 
-async function Content(topic) {
-  return "content";
+async function Content(topic, background, question1, answer1, question2, answer2, res) {
+  try {
+    const assistant = await openai.beta.assistants.create({
+      name: "Headlines generator",
+      instructions: "you will be given a topic user wants to learn, their background, and answers to two questions that give further information of the user's learning objectives. Give 10 personalized headlines of steps to accomplish the users learning goals.",
+      model: "gpt-4"
+    });    
+    asst_ids.push(assistant.id);
+    const thread = await openai.beta.threads.create();
+    prompt = `topic: "${topic}", background: "${background}", question1: "${question1}", answer1: "${answer1}", question2: "${question2}", answer2: "${answer2}"`
+    const message = await openai.beta.threads.messages.create(
+      thread.id,
+      {
+          role: "user",
+          content: prompt
+      }
+    )
+    // console.log('message\n', message.content[0].text)
+    const run = await openai.beta.threads.runs.create(
+        thread.id,
+        {
+            assistant_id: assistant.id,
+        }
+    )
+    // console.log(thread)
+    console.log("thread done\n")
+    const ran = await openai.beta.threads.runs.retrieve(
+      thread.id, run.id
+    )
+    // console.log(ran)
+    console.log("waiting for openai response")
+
+    while(true) {
+        const ran = await openai.beta.threads.runs.retrieve(
+            thread.id, run.id
+        )
+        if(ran.status == 'completed') {
+            console.log(ran.status);
+            break;
+        }
+    }
+
+    const messages = await openai.beta.threads.messages.list(
+        thread.id
+    );
+
+
+    for (const message of messages.body.data) {
+      if(message.role == "assistant") {
+        text = message.content[0].text.value;
+        const headlines = text.split('\n');
+        const json = {};
+        headlines.forEach(headline => {
+            const match = headline.match(/^(\d+)\. "(.*)"$/);
+            if (match) {
+                json[match[1]] = match[2];
+            }
+        });
+        console.log(json)
+        return json;
+      }
+    }
+  } catch(error) {
+    throw error
+  }
+
 }
 
 async function QA(topics) {
@@ -507,41 +571,39 @@ async function PracticeProblems(topic) {
   return "Practice problems";
 }
 
-app.get('/api/getTopicData', async (req, res) => {
-  // types of content to be generated
-  // var contentTypes = req.query.contentTypes;
-  var contentTypes = ["Summary", "FlashCards", "Youtube"];
-  // var topic = req.query.topic;
-  var topic = "Numpy and Pandas";
-  // var context = req.query.context;
-  var context = "Beginner who has never coded";
-
+app.post('/api/getTopicData', async (req, res) => {
+  const {topic, background, question1, answer1, question2, answer2} = req.body
+  
   var outputs = {};
 
-  if (contentTypes.includes("Summary")) {
-    outputs["Summary"] = await Summary(topic, context);
-  }
-  if (contentTypes.includes("FlashCards")) {
-    outputs["FlashCards"] = await FlashCards(topic);
-  }
-  if (contentTypes.includes("Youtube")) {
-    var [id, names] = await Youtube(topic);
-    outputs["Youtube"] = id;
-    outputs["YoutubeNames"] = names;
-  }
-  if (contentTypes.includes("Content")) {
-    outputs["Content"] = await Content(topic);
-  }
-  if (contentTypes.includes("QA")) {
-    outputs["QA"] = QA(topic);
-  }
-  if (contentTypes.includes("PracticeProblems")) {
-    outputs["PracticeProblems"] = PracticeProblems(topic);
-  }
+  // if (contentTypes.includes("Summary")) {
+  //   outputs["Summary"] = await Summary(topic, background);
+  // }
+  // if (contentTypes.includes("FlashCards")) {
+  //   outputs["FlashCards"] = await FlashCards(topic);
+  // }
+  // if (contentTypes.includes("Youtube")) {
+  //   var [id, names] = await Youtube(topic);
+  //   outputs["Youtube"] = id;
+  //   outputs["YoutubeNames"] = names;
+  // }
+  // if (contentTypes.includes("Content")) {
+  try {
+    outputs["Content"] = await Content(topic, background, question1, answer1, question2, answer2, res);
+    // }
+    // if (contentTypes.includes("QA")) {
+    //   outputs["QA"] = QA(topic);
+    // }
+    // if (contentTypes.includes("PracticeProblems")) {
+    //   outputs["PracticeProblems"] = PracticeProblems(topic);
+    // }
 
-  console.log(outputs);
+    console.log(outputs);
 
-  res.json(outputs);
+    res.json(outputs);
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
 
 })
 
@@ -555,7 +617,9 @@ app.listen(PORT, () => {
 });
 
 process.on('SIGINT', async () => {
-    const response = await openai.beta.assistants.del(asst_id);
-    console.log(response);
+    for(const ass of asst_ids) {
+      const response = await openai.beta.assistants.del(ass);
+      console.log(response);
+    }
     process.exit(0)
 })
