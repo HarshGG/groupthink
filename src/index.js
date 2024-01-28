@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Preferences from "./pages/Preferences"
+import Lemonade from './pages/Lemonade'
+import TopicPageGenerator from './TopicPageGenerator'
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CourseList from "./CourseList";
@@ -34,6 +36,7 @@ root.render(
       <Route path="/courses" element={<CourseList pageTitle="Courses" thumbnails={[<CourseThumbnail courseName="NumPy" />, <CourseThumbnail courseName="Finance" />, <CourseThumbnail courseName="Business Law" />]} />} />
       <Route path="/course/numpy" element={<CourseList pageTitle="NumPy" thumbnails={[<CourseThumbnail courseName="Basics" />, <CourseThumbnail courseName="Data processing" />]} />} />
       <Route path="/course/numpy/main" element={<TopicPage pageTitle="NumPy - Learning" summarySubtitles={["first", "second"]} summaryContents={["lorem ipsum dolor", "sit amet"]} />} />
+      <Route path="/course" element={<TopicPageGenerator />} />;
     </Routes>
   </Router>,
 
