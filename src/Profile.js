@@ -19,7 +19,7 @@ const Profile = () => {
 
     return (
         <div className="profile-container">
-            <h1>{userData.username}'s Profile</h1>
+            <h2>{userData.username}'s Profile</h2>
             <div className="statistics">
                 <div className="statistic-item">
                     <span>{userData.coursesTaken}</span>
@@ -32,7 +32,7 @@ const Profile = () => {
             </div>
 
             <div className="learning-section">
-                <h2>Currently Learning</h2>
+                <h3>Currently Learning</h3>
                 <div className="learning-list">
                     {userData.currentlyLearning.map((course, index) => (
                         <div className="course-item" key={index}>
@@ -49,7 +49,7 @@ const Profile = () => {
             </div>
 
             <div className="skills-section">
-                <h2>Skills</h2>
+                <h3>Skills</h3>
                 <div className="skills-list">
                     {userData.skills.map((skill, index) => (
                         <p key={index} className={index % 3 === 0 ? 'left' : index % 3 === 1 ? 'center' : 'right'}>

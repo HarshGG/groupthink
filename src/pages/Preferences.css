@@ -14,11 +14,16 @@ label {
     font-size: large;
 }
 
-.labels {
+/* .labels {
     text-align: left;
-}
+} */
 
 input {
     padding: 30px;
     font-size: large;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-around;
 }
