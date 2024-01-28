@@ -1,3 +1,3 @@
-const totalScreens = 5
+const totalScreens = 6
 
 export default totalScreens;

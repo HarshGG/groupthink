@@ -1,32 +1,21 @@
-// src/CourseList.js
-import React, { useState } from 'react';
-import './CourseList.css'; // This file is for your styles
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import './CourseList.css';
+import { useNavigate } from 'react-router-dom';
 import CourseThumbnail from './CourseThumbnail';
 
-function CourseList({pageTitle, thumbnails}) {
-  const [name, setName] = useState(''); // Using useState to handle the name input
-  let location = useLocation();
-
+function CourseList({ pageTitle }) {
+  let navigate = useNavigate();
   let content = JSON.parse(localStorage.getItem('content'))['Content'];
-  if(!content) {
+  if (!content) {
     content = {};
   }
 
-  let handleClick = (e, index) => {
-    e.preventDefault();
-    localStorage.setItem("selectedTopic", index);
-    window.location.href = '/course';
-  }
-
-  const handleInputChange = (event) => {
-    setName(event.target.value); // Update the name state when input changes
-  };
-
-  const handleFormSubmit = (event) => {
-    event.preventDefault(); // Prevent the form from refreshing the page
-    // Here you might handle the submission, like storing the name or navigating to another page
-    console.log(name); // For now, we'll just log the name to the console
+  let handleClick = (index) => {
+    localStorage.setItem("selectedTopic", (index+1).toString());
+    console.log(localStorage.getItem("selectedTopic"))
+    setTimeout(() => {
+      navigate('/course');
+    }, 2000);
   };
 
   return (
@@ -34,11 +23,12 @@ function CourseList({pageTitle, thumbnails}) {
       <header className="CourseList-header">
         <h1>{pageTitle}</h1>
       </header>
-      <div className="courses"> 
-        {/* <CourseThumbnail courseName="NumPy" />
-        <CourseThumbnail courseName="Finance" />
-        <CourseThumbnail courseName="Business Law" /> */}
-        {Object.keys(content).map((subtopic, i) => (<Link to="/course" onClick={(e) => {this.handleClick(e, i)}}><CourseThumbnail courseName={content[subtopic]} /></Link>))}
+      <div className="courses">
+        {Object.keys(content).map((subtopic, i) => (
+          <div onClick={() => handleClick(i)}>
+            <CourseThumbnail courseName={content[subtopic]} />
+          </div>
+        ))}
       </div>
     </div>
   );

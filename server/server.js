@@ -564,6 +564,9 @@ async function Content(topic, background, question1, answer1, question2, answer2
 app.post('/api/generate-subtopic', async (req, res) => {
   try {
     const {headlines, number, background} = req.body
+    console.log(headlines)
+    console.log(number)
+    console.log(background)
     const assistant = await openai.beta.assistants.create({
       name: "Headlines generator",
       instructions: `you will be generating detailed course content for a user on a step of a multi-step learning process. Keep it detailed, and keep the tone casual but informative. the user's background is ${background}`,
@@ -610,7 +613,10 @@ app.post('/api/generate-subtopic', async (req, res) => {
 
 
     for (const message of messages.body.data) {
-      console.log(message)
+      if(message.role == "assistant") {
+        console.log(message.content);
+        res.json(message.content[0].text.value)
+      }
     }
   } catch (error) {
     throw error;
