@@ -8,7 +8,7 @@ function CourseList({pageTitle, thumbnails}) {
   const [name, setName] = useState(''); // Using useState to handle the name input
   let location = useLocation();
 
-  let content = JSON.parse(localStorage.getItem('content'));
+  let content = JSON.parse(localStorage.getItem('content'))['Content'];
   if(!content) {
     content = {};
   }
