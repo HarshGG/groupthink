@@ -87,7 +87,7 @@ app.post('/api/generate-questions', async (req, res) => {
 
 // Get YouTube links
 app.get('/api/youtubelinks', async (req, res) => {
-  var useRealData = false;
+  var useRealData = true;
 
   const searchPrompt = req.query.prompt;
 
