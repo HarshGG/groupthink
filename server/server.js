@@ -621,7 +621,7 @@ app.post('/api/generate-subtopic', async (req, res) => {
     console.log(background)
     const assistant = await openai.beta.assistants.create({
       name: "Headlines generator",
-      instructions: `you will be generating detailed course content for a user on a step of a multi-step learning process. Keep it detailed, and keep the tone casual but informative. the user's background is ${background}`,
+      instructions: `you will be generating detailed course content for a user on a step of a multi-step learning process. Keep it detailed, and keep the tone casual but informative. the user's background is ${background}. give the output in HTML, where the biggest font used is h3`,
       model: "gpt-4"
     });    
     asst_ids.push(assistant.id);
