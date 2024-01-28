@@ -5,9 +5,9 @@ import Videos from './Videos'
 function TopicPage({pageTitle, summarySubtitles, summaryContents}) {
     return (
         <div className="TopicPage">
-            <h1 className="TopicPage-title">{pageTitle}</h1>
+            <h3 className="TopicPage-title">{pageTitle}</h3>
 
-            <h2 className="TopicPage-subtitle">Summary</h2>
+            <h4 className="TopicPage-subtitle">Summary</h4>
             <Summary subtitles={summarySubtitles} contents={summaryContents} />
             {/* <Summary subtitles={["first", "second"]} contents={["lsdjfdskjhfdsjkhf", "askjdashsd akjhdsakjhd kajsdhaskjdhakjhd"]} /> */}
 
