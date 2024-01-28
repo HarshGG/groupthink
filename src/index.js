@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Room from "./Room";
 import Test from './Test';
+import Navbar from './Navbar';
 
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(
@@ -18,8 +19,9 @@ import Test from './Test';
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <Router>
+    <Navbar />
     <Routes>
-      <Route path="/" element={<App />} />
+      <Route path="/" element={<Preferences />} />
       <Route path="/room" element={<Room />} />
       <Route path="/test" element={<Test />} />
     </Routes>
