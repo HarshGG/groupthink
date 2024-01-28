@@ -38,11 +38,16 @@ app.post('/api/openai', async (req, res) => {
 });
 
 
-// Get YouTube links
-app.get('/api/youtubelinks', async (req, res) => {
-  var useRealData = false;
+async function Summary() {
 
-  const searchPrompt = req.query.prompt;
+}
+
+async function FlashCards() {
+
+}
+
+async function Youtube(searchPrompt) {
+  var useRealData = false;
 
   const apiKey = 'AIzaSyDp29FG3nd8fyuu_CL2m1OfokMkQldz7-0';
 
@@ -52,7 +57,7 @@ app.get('/api/youtubelinks', async (req, res) => {
 
   const params = {
     part: 'snippet',
-    maxResults: 25,
+    maxResults: 5,
     q: searchPrompt,
     type: 'video',
     key: apiKey,
@@ -231,7 +236,59 @@ app.get('/api/youtubelinks', async (req, res) => {
     ];
   }
 
-  res.json(data);
+  // refine by description relevance
+
+  var videoIds = [];
+  data.forEach(element => {
+    videoIds.push(element.id.videoId);
+  });
+
+  return videoIds;
+}
+
+async function Content() {
+
+}
+
+async function QA() {
+
+}
+
+async function PracticeProblems() {
+
+}
+
+app.get('/api/getTopicData', async (req, res) => {
+  // types of content to be generated
+  // var contentTypes = req.query.contentTypes;
+  var contentTypes = ["Summary", "FlashCards", "Youtube"];
+  // var topic = req.query.topic;
+  var topic = "Numpy and Pandas";
+
+  var outputs = {};
+
+  if (contentTypes.includes("Summary")) {
+    outputs["Summary"] = "This is a summary";
+  }
+  if (contentTypes.includes("FlashCards")) {
+    outputs["FlashCards"] = "This is flashcards";
+  }
+  if (contentTypes.includes("Youtube")) {
+    outputs["Youtube"] = await Youtube(topic);
+  }
+  if (contentTypes.includes("Content")) {
+    outputs["Content"] = "This is content";
+  }
+  if (contentTypes.includes("QA")) {
+    outputs["QA"] = "This is Q&A";
+  }
+  if (contentTypes.includes("PracticeProblems")) {
+    outputs["PracticeProblems"] = "This is practice problems";
+  }
+
+  console.log(outputs);
+
+  res.json(outputs);
 
 })
 
