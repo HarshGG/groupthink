@@ -17,7 +17,7 @@ function Test() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/api/getTopicData", { params: { prompt: "Numpy Tutorial" }, });
+                const response = await axios.get("http://localhost:3001/api/getTopicData", { params: { prompt: "Numpy Tutorial" }, });
                 setData(response.data);
             } catch (error) {
                 setError(error.message);

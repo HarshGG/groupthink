@@ -277,12 +277,12 @@ app.get('/api/youtubelinks', async (req, res) => {
 });
 
 
-async function Summary() {
-
+async function Summary(topic) {
+  return "summary";
 }
 
-async function FlashCards() {
-
+async function FlashCards(topic) {
+  return "flashcards";
 }
 
 async function Youtube(searchPrompt) {
@@ -475,8 +475,6 @@ async function Youtube(searchPrompt) {
     ];
   }
 
-  // refine by description relevance
-
   var videoIds = [];
   data.forEach(element => {
     videoIds.push(element.id.videoId);
@@ -485,16 +483,16 @@ async function Youtube(searchPrompt) {
   return videoIds;
 }
 
-async function Content() {
-
+async function Content(topic) {
+  return "content";
 }
 
-async function QA() {
-
+async function QA(topics) {
+  return "QA";
 }
 
-async function PracticeProblems() {
-
+async function PracticeProblems(topic) {
+  return "Practice problems";
 }
 
 app.get('/api/getTopicData', async (req, res) => {
@@ -507,22 +505,22 @@ app.get('/api/getTopicData', async (req, res) => {
   var outputs = {};
 
   if (contentTypes.includes("Summary")) {
-    outputs["Summary"] = "This is a summary";
+    outputs["Summary"] = await Summary(topic);
   }
   if (contentTypes.includes("FlashCards")) {
-    outputs["FlashCards"] = "This is flashcards";
+    outputs["FlashCards"] = await FlashCards(topic);
   }
   if (contentTypes.includes("Youtube")) {
     outputs["Youtube"] = await Youtube(topic);
   }
   if (contentTypes.includes("Content")) {
-    outputs["Content"] = "This is content";
+    outputs["Content"] = await Content(topic);
   }
   if (contentTypes.includes("QA")) {
-    outputs["QA"] = "This is Q&A";
+    outputs["QA"] = QA(topic);
   }
   if (contentTypes.includes("PracticeProblems")) {
-    outputs["PracticeProblems"] = "This is practice problems";
+    outputs["PracticeProblems"] = PracticeProblems(topic);
   }
 
   console.log(outputs);
