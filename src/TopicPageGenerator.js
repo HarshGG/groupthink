@@ -3,6 +3,7 @@ import TopicPage from './TopicPage';
 
 function TopicPageGenerator() {
   const [data, setData] = useState(null);
+  const [caro, setCaro] = useState(null);
   const [title, setTitle] = useState("titl")
 
   useEffect(() => {
@@ -14,6 +15,7 @@ function TopicPageGenerator() {
       let background = localStorage.getItem('background');
 
       let postData = { headlines: content, number: index, background: background };
+      let carouselData = {subtopic: JSON.parse(localStorage.getItem('content'))['Content'][index], background: background};
 
       try {
         const response = await fetch('http://localhost:3001/api/generate-subtopic', {
@@ -25,19 +27,33 @@ function TopicPageGenerator() {
         });
         const result = await response.json();
         console.log('Success:', result);
+
+        const carouselResponse = await fetch("http://localhost:3001/api/carousel", {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(carouselData),
+        });
+        const carouselResult = await carouselResponse.json();
+        console.log(carouselResult);
         setData(result); // Set the data to state
+        setCaro(carouselResult);
       } catch (error) {
         console.error('Error:', error);
       }
+
+
+
     }
 
     fetchData();
   }, []); // Empty dependency array to run only once
 
   // Render only if data is available
-  if (data) {
+  if (caro) {
     return (
-      <TopicPage pageTitle={title} summaryContents={[""]} summarySubtitles={[data]} />
+      <TopicPage pageTitle={title} summaryContents={[""]} summarySubtitles={[data]} carouselDataToPass={[carouselResult]}/>
     );
   } else {
     return <div>Loading...</div>; // Or any other loading state

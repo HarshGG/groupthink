@@ -286,17 +286,19 @@ async function Summary(topic, background) {
   return "summary";
 }
 
-async function FlashCards(topic, background) {
+app.post('/api/carousel', async (req, res) => {
   try {
-    const {topic, background} = req.body
+    const {subtopic, background} = req.body
+    console.log(subtopic)
+    console.log(background)
     const assistant = await openai.beta.assistants.create({
-      name: "FlashCards generator",
-      instructions: `you will be generating flashcard questions and answers for a user on a step of a multi-step learning process. Keep it detailed, and keep the tone casual but informative. the user's background is ${background}`,
+      name: "carousel generator",
+      instructions: `you will be generating carousel questions and answers for a user on a step of a multi-step learning process. Keep it simple, and keep the tone casual but informative. the user's background is ${background}. Give me 5 small questions and 5 small answers in JSON format`,
       model: "gpt-4"
     });    
     asst_ids.push(assistant.id);
     const thread = await openai.beta.threads.create();
-    const prompt = `given the topic below, generate flashcards and their respective answers. Return each flashcards with the following format: Q: for questions. A: for answers. The topic is ${topic}`;
+    const prompt = `given the topic below, generate carousel and their respective answers. Return each carousel with the following format: Q: for questions. A: for answers. The topic is ${subtopic}`;
     const message = await openai.beta.threads.messages.create(
       thread.id,
       {
@@ -335,12 +337,15 @@ async function FlashCards(topic, background) {
 
 
     for (const message of messages.body.data) {
-      console.log(message)
+      if(message.role == "assistant") {
+        console.log(JSON.parse(message.content[0].text.value))
+        res.json(JSON.parse(message.content[0].text.value));
+      }
     }
   } catch (error) {
     throw error;
   }
-}
+});
 
 async function Youtube(searchPrompt) {
   var useRealData = false;

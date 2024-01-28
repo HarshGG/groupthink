@@ -3,7 +3,7 @@ import Summary from './Summary'
 import Videos from './Videos'
 import Carousel from './Carousel'
 
-function TopicPage({ pageTitle, summarySubtitles, summaryContents }) {
+function TopicPage({ pageTitle, summarySubtitles, summaryContents, carouselDataToPass }) {
     return (
         <div className="TopicPage">
             <h3 className="TopicPage-title">{pageTitle}</h3>
@@ -23,7 +23,7 @@ function TopicPage({ pageTitle, summarySubtitles, summaryContents }) {
             </div> */}
 
             <h2 className="TopicPage-subtitle">Flashcards</h2>
-            <Carousel />
+            <Carousel data={carouselDataToPass}/>
 
             <h2 className="TopicPage-subtitle">Related Videos</h2>
             <Videos prompt={pageTitle} />
