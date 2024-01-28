@@ -1,6 +1,7 @@
 
 const OpenAI = require('openai').default; // Adjusted for CommonJS
 const dotenv = require('dotenv');
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 
@@ -36,7 +37,7 @@ app.post('/generate-questions', async (req, res) => {
         const prompt = `give me two follow up questions to learn more about a user that wants to learn about ${topic} and has a background of ${background}. 
         These questions should be general enough and very broad to know more about how to best tailor tutoring content for the user to teach them ${topic}. 
         ask about their related experience and how they plan on using it, but in a broad manner. the question should be small and simple.`;
-
+        console.log(prompt)
         const message = await openai.beta.threads.messages.create(
             thread.id,
             {
@@ -71,8 +72,8 @@ app.post('/generate-questions', async (req, res) => {
 
         for (const message of messages.body.data) {
             if(message.role == "assistant") {
-                console.log(JSON.parse(message.content[0].text.value))
-                res.json(JSON.parse(message.content[0].text.value))
+                console.log(JSON.parse((message.content[0].text.value).replace(/```json\n|\n```|\n/g, '')))
+                res.json(JSON.parse((message.content[0].text.value).replace(/```json\n|\n```|\n/g, '')))
                 break;
             }
         }
