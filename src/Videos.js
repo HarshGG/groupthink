@@ -8,8 +8,8 @@ function Videos({prompt}) {
     const [error, setError] = useState(null);
 
     var opts = {
-        height: '400',
-        width: '600',
+        height: '200',
+        width: '300',
         playerVars: {
             autoplay: 0, // Change to 1 if you want the video to autoplay
         },
@@ -42,7 +42,7 @@ function Videos({prompt}) {
                 <div className="VideosContainer">
                     <div className="Videos">
                         {data.Youtube.map((videoId, index) => (
-                            <div key={index}>
+                            <div className="YouTubeContainer" key={index}>
                                 <h5>{data.YoutubeNames[index]}</h5>
                                 <YouTube videoId={videoId} opts={opts} />
                             </div>
