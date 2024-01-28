@@ -39,6 +39,19 @@ small {font-size: 0.750rem; /* 12px */}
     max-width: 800px;
     margin: auto;
 }
+
 .TopicPage-title {
     text-align: center;
 }
+
+.TopicPage-subtitle {
+    color: var(--secondary);
+}
+
+/* .TopicPage-subtitle::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: var(--secondary);
+} */

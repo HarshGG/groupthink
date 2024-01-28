@@ -1,3 +1,14 @@
 .Summary {
     text-align: left;
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
+.Summary-heading {
+    margin-top: 0;
+}
+.Summary-text {
+    text-align: left;
 }
