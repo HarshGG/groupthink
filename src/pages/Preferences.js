@@ -138,6 +138,8 @@ class Preferences extends React.Component {
   }
   
   nextButton(){
+    console.log(this.formData);
+
     let currentStep = this.state.currentStep;
     if(currentStep < totalScreens){
       return (
@@ -184,6 +186,7 @@ class Preferences extends React.Component {
       .catch(error => console.error('Error:', error));
     }
     
+  
     render() {    
       const isFinalStep = this.state.currentStep > 5;
 
