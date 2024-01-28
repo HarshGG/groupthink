@@ -1,0 +1,41 @@
+/* styles.css */
+
+.carousel-container {
+    width: 300px; /* Adjust the width as needed */
+    margin: 50px auto;
+  }
+
+  .carousel-body {
+    border: 1px solid #d4af97; /* Add a white border around the carousel */
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255,); /* Set the background color with transparency */
+    padding: 15%;
+  }
+  
+  .carousel-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+.carousel-button {
+    background-color: #e6c1c1; /* Change this to the desired button color */
+    color: #fff; /* Change this to the desired text color */
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: large;
+  }
+  
+  .carousel-card {
+    padding: 15px;
+    text-align: center;
+    
+  }
+  
+  .carousel-card h2 {
+    margin-bottom: 10px;
+  }
+  
+  

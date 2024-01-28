@@ -12,6 +12,7 @@ import Videos from './Videos';
 import Navbar from './Navbar';
 import Contact from './Contact';
 import Profile from './Profile';
+import Carousel from './Carousel';
 
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(
@@ -28,6 +29,7 @@ root.render(
       <Route path="/" element={<Preferences />} />
       <Route path="/videos" element={<Videos />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/carousel" element={<Carousel />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/courses" element={<CourseList pageTitle="Courses" thumbnails={[<CourseThumbnail courseName="NumPy" />, <CourseThumbnail courseName="Finance" />, <CourseThumbnail courseName="Business Law" />]} />} />
       <Route path="/course/numpy" element={<CourseList pageTitle="NumPy" thumbnails={[<CourseThumbnail courseName="Basics" />, <CourseThumbnail courseName="Data processing" />]} />} />
