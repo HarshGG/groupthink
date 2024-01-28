@@ -1,0 +1,86 @@
+/* Profile.css */
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1, h2 {
+    text-align: center;
+  }
+  
+  .statistics {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .statistic-item {
+    text-align: center;
+  }
+  
+  span {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 5px;
+  }
+  
+  .learning-section {
+    margin-top: 20px;
+  }
+  
+  .learning-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .course-item {
+    margin-bottom: 15px;
+  }
+  
+  .progress-bar-container {
+    height: 10px;
+    background-color: #4d4949;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 5px;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #ccc;
+  }
+  
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .left {
+    flex-basis: 33.33%;
+    text-align: center;
+  }
+  
+  .center {
+    flex-basis: 33.33%;
+    text-align: center;
+  }
+  
+  .right {
+    flex-basis: 33.33%;
+    text-align: center;
+  }
+  
+  .skills-list p {
+    margin: 5px 0;
+  }
