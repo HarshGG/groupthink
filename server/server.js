@@ -286,8 +286,60 @@ async function Summary(topic, background) {
   return "summary";
 }
 
-async function FlashCards(topic) {
-  return "flashcards";
+async function FlashCards(topic, background) {
+  try {
+    const {topic, background} = req.body
+    const assistant = await openai.beta.assistants.create({
+      name: "FlashCards generator",
+      instructions: `you will be generating flashcard questions and answers for a user on a step of a multi-step learning process. Keep it detailed, and keep the tone casual but informative. the user's background is ${background}`,
+      model: "gpt-4"
+    });    
+    asst_ids.push(assistant.id);
+    const thread = await openai.beta.threads.create();
+    const prompt = `given the topic below, generate flashcards and their respective answers. Return each flashcards with the following format: Q: for questions. A: for answers. The topic is ${topic}`;
+    const message = await openai.beta.threads.messages.create(
+      thread.id,
+      {
+          role: "user",
+          content: prompt
+      }
+    )
+    // console.log('message\n', message.content[0].text)
+    const run = await openai.beta.threads.runs.create(
+        thread.id,
+        {
+            assistant_id: assistant.id,
+        }
+    )
+    // console.log(thread)
+    console.log("thread done\n")
+    const ran = await openai.beta.threads.runs.retrieve(
+      thread.id, run.id
+    )
+    // console.log(ran)
+    console.log("waiting for openai response")
+
+    while(true) {
+        const ran = await openai.beta.threads.runs.retrieve(
+            thread.id, run.id
+        )
+        if(ran.status == 'completed') {
+            console.log(ran.status);
+            break;
+        }
+    }
+
+    const messages = await openai.beta.threads.messages.list(
+        thread.id
+    );
+
+
+    for (const message of messages.body.data) {
+      console.log(message)
+    }
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function Youtube(searchPrompt) {
