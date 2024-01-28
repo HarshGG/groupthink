@@ -45,7 +45,7 @@ small {font-size: 0.750rem; /* 12px */}
 }
 
 .TopicPage-subtitle {
-    color: var(--secondary);
+    color: #68c4a1;
 }
 
 /* .TopicPage-subtitle::after {

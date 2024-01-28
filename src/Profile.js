@@ -29,10 +29,6 @@ const Profile = () => {
                     <span>{userData.dateJoined}</span>
                     <p>Date Joined</p>
                 </div>
-                <div className="statistic-item">
-                    <span>{userData.communities}</span>
-                    <p>Communities</p>
-                </div>
             </div>
 
             <div className="learning-section">
