@@ -1,34 +1,55 @@
-// src/App.js
 import React, { useState } from 'react';
-import './App.css'; // This file is for your styles
+import './App.css'; 
 
 function App() {
-  const [name, setName] = useState(''); // Using useState to handle the name input
+  const [formData, setFormData] = useState({
+    topic: '',
+    background: '',
+  });
 
   const handleInputChange = (event) => {
-    setName(event.target.value); // Update the name state when input changes
+    setFormData({ ...formData, [event.target.id]: event.target.value });
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault(); // Prevent the form from refreshing the page
-    // Here you might handle the submission, like storing the name or navigating to another page
-    console.log(name); // For now, we'll just log the name to the console
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formData); // Logging the form data to the console
+    const data = {
+      topic: document.getElementById('topic').value,
+      background: document.getElementById('background').value,
+  };
+
+  // Make the POST request
+  fetch('http://localhost:3001/generate-questions', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Success:', data);
+      // Display the result
+      document.getElementById('result').innerText = data.questions.join('\n');
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
   };
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Groupthink!</h1>
-        <form onSubmit={handleFormSubmit}>
-          <input
-            type="text"
-            placeholder="Enter your name"
-            value={name}
-            onChange={handleInputChange}
-          />
-          <button type="submit">Get Started</button>
-        </form>
       </header>
+      <form id="questionForm" onSubmit={handleFormSubmit}>
+        <input type="text" id="topic" placeholder="Topic" value={formData.topic} onChange={handleInputChange} />
+        <input type="text" id="background" placeholder="Background" value={formData.background} onChange={handleInputChange} />
+        <button type="submit">Generate Questions</button>
+      </form>
+
+      <div id="result"></div>
     </div>
   );
 }
