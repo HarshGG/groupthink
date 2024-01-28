@@ -11,8 +11,10 @@ class Preferences extends React.Component {
         currentStep: 1,
         name:  '',
         topic: '',
-        background: '', 
+        background: '',
+        question1: '', 
         answer1: '', 
+        question2: '',
         answer2: '', 
       }
     }
@@ -27,7 +29,7 @@ class Preferences extends React.Component {
      
     handleSubmit = event => {
       event.preventDefault()
-      const { name, topic, background, answer1, answer2 } = this.state
+      const { name, topic, background, question1, answer1, question2, answer2 } = this.state
       alert(`Your registration detail: \n 
              Name: ${name} \n 
              Topic: ${topic} \n
@@ -41,7 +43,9 @@ class Preferences extends React.Component {
         name: name,
         topic: topic,
         background: background,
+        question1: question1,
         answer1: answer1,
+        question2: question2,
         answer2: answer2,
       };
 
@@ -49,8 +53,33 @@ class Preferences extends React.Component {
 
     }
     
-    _next = () => {
+    _next = async () => {
       let currentStep = this.state.currentStep
+
+      if(currentStep === 3) {
+        this.setState({ question1: 'Loading...', question2: 'Loading...' });
+        const { topic, background } = this.state
+        const questionInputData = {
+          topic: topic,
+          background: background
+        }
+        await fetch('http://localhost:3001/generate-questions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(questionInputData),
+          })
+          .then(response => response.json())
+          .then(data => {
+              this.setState({
+                  question1: data.q1,
+                  question2: data.q2,
+              });
+          })
+          .catch(error => console.error('Error:', error));
+      }
+
       currentStep = currentStep >= totalScreens - 1 ? totalScreens : currentStep + 1
       this.setState({
         currentStep: currentStep
@@ -125,11 +154,13 @@ class Preferences extends React.Component {
             currentStep={this.state.currentStep} 
             handleChange={this.handleChange}
             answer1={this.state.answer1}
+            question1={this.state.question1}
           />
           <Screen5 
             currentStep={this.state.currentStep} 
             handleChange={this.handleChange}
             answer2={this.state.answer2}
+            question2={this.state.question2}
           />
           {this.previousButton()}
           {this.nextButton()}
@@ -206,7 +237,7 @@ class Preferences extends React.Component {
     } 
     return(
       <div className="form-group">
-        <label htmlFor="answer1">Answer1</label>
+        <label htmlFor="answer1">{props.question1}</label>
         <input
           className="form-control"
           id="answer1"
@@ -227,7 +258,7 @@ class Preferences extends React.Component {
     return(
       <React.Fragment>
       <div className="form-group">
-        <label htmlFor="answer2">Answer2</label>
+        <label htmlFor="answer2">{props.question2}</label>
         <input
           className="form-control"
           id="answer2"
