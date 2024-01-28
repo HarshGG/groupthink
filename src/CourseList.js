@@ -1,9 +1,8 @@
 // src/CourseList.js
 import React, { useState } from 'react';
 import './CourseList.css'; // This file is for your styles
-import CourseThumbnail from './CourseThumbnail';
 
-function CourseList() {
+function CourseList({pageTitle, thumbnails}) {
   const [name, setName] = useState(''); // Using useState to handle the name input
 
   const handleInputChange = (event) => {
@@ -19,12 +18,13 @@ function CourseList() {
   return (
     <div className="CourseList">
       <header className="CourseList-header">
-        <h1>Courses</h1>
+        <h1>{pageTitle}</h1>
       </header>
       <div className="courses"> 
-        <CourseThumbnail courseName="NumPy" />
+        {/* <CourseThumbnail courseName="NumPy" />
         <CourseThumbnail courseName="Finance" />
-        <CourseThumbnail courseName="Business Law" />
+        <CourseThumbnail courseName="Business Law" /> */}
+        {thumbnails.map((thumbnail, index) => (thumbnail))}
       </div>
     </div>
   );
