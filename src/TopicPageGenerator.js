@@ -53,7 +53,7 @@ function TopicPageGenerator() {
   // Render only if data is available
   if (caro) {
     return (
-      <TopicPage pageTitle={title} summaryContents={[""]} summarySubtitles={[data]} carouselDataToPass={[carouselResult]}/>
+      <TopicPage pageTitle={title} summaryContents={[""]} summarySubtitles={[data]} carouselDataToPass={[caro]}/>
     );
   } else {
     return <div>Loading...</div>; // Or any other loading state

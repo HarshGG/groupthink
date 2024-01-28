@@ -15,7 +15,7 @@ function CourseList({ pageTitle }) {
     console.log(localStorage.getItem("selectedTopic"))
     setTimeout(() => {
       navigate('/course');
-    }, 2000);
+    }, 500);
   };
 
   return (
