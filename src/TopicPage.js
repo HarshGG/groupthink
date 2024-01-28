@@ -22,7 +22,7 @@ function TopicPage({pageTitle, summarySubtitles, summaryContents}) {
             </div> */}
 
             <h2 className="TopicPage-subtitle">Related Videos</h2>
-            <Videos />
+            <Videos prompt={pageTitle} />
         </div>
     )
 }

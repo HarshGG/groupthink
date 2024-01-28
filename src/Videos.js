@@ -3,7 +3,7 @@ import axios from "axios";
 import YouTube from 'react-youtube';
 import './Videos.css'
 
-function Videos() {
+function Videos({prompt}) {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
 
@@ -25,7 +25,7 @@ function Videos() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.post("http://localhost:3001/api/getTopicData", { params: { topic: "", background: "", question1: "", answer1: "", question2: "", answer2: "", prompt: "Numpy Tutorial" }, });
+                const response = await axios.post("http://localhost:3001/api/getTopicData", { params: { topic: "", background: "", question1: "", answer1: "", question2: "", answer2: "", prompt: prompt}, });
                 setData(response.data);
             } catch (error) {
                 setError(error.message);

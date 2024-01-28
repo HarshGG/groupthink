@@ -34,6 +34,11 @@ h5 {font-size: 1.333rem; /* 21.28px */}
 
 small {font-size: 0.750rem; /* 12px */}
 
+
+.TopicPage {
+    max-width: 800px;
+    margin: auto;
+}
 .TopicPage-title {
     text-align: center;
 }
