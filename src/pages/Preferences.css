@@ -26,4 +26,5 @@ input {
 .buttonContainer {
     display: flex;
     justify-content: space-around;
+    margin: 1px;
 }

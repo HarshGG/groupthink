@@ -234,9 +234,15 @@ class Preferences extends React.Component {
         )}
         {isFinalStep && (
           // Render your new component with navigate button here
-          <Link to={{
-            pathname: "/courses",
-          }}>Go to home</Link>
+          <div class="align-items: center">
+            <button>
+              <Link to={{
+                pathname: "/courses",
+              }}>
+                Go to home
+              </Link>
+            </button>
+          </div>
         )}
       </React.Fragment>
     );
