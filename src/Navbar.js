@@ -20,8 +20,8 @@ const Navbar = () => {
         </div>
         <ul className={`nav-menu ${isMobile ? 'mobile' : ''}`}>
           <li className="nav-item"><a href="/">Home</a></li>
-          <li className="nav-item"><a href="/about">Courses</a></li>
-          <li className="nav-item"><a href="/services">Profile</a></li>
+          <li className="nav-item"><a href="/courses">Courses</a></li>
+          <li className="nav-item"><a href="/profile">Profile</a></li>
           <li className="nav-item"><a href="/contact">Contact</a></li>
           <li className="nav-item"><a href="/test">Test</a></li>
         </ul>

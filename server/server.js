@@ -13,10 +13,12 @@ app.use(cors());
 
 const PORT = 3001;
 
+
 // Create an instance of OpenAI
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
+
 
 asst_id = "";
 
@@ -96,7 +98,7 @@ app.get('/api/youtubelinks', async (req, res) => {
 
   const params = {
     part: 'snippet',
-    maxResults: 25,
+    maxResults: 5,
     q: searchPrompt,
     type: 'video',
     key: apiKey,
@@ -277,7 +279,9 @@ app.get('/api/youtubelinks', async (req, res) => {
 });
 
 
-async function Summary(topic) {
+async function Summary(topic, context) {
+  const prompt = `Given the topic ${topic} and the associated subtopics ${topic} and your task is to create 1-3 
+  paragraphs of introductory content that caters to the following audience: ${context}.`;
   return "summary";
 }
 
@@ -480,7 +484,12 @@ async function Youtube(searchPrompt) {
     videoIds.push(element.id.videoId);
   });
 
-  return videoIds;
+  var videoNames = [];
+  data.forEach(element => {
+    videoNames.push(element.snippet.title);
+  });
+
+  return [videoIds, videoNames];
 }
 
 async function Content(topic) {
@@ -501,17 +510,21 @@ app.get('/api/getTopicData', async (req, res) => {
   var contentTypes = ["Summary", "FlashCards", "Youtube"];
   // var topic = req.query.topic;
   var topic = "Numpy and Pandas";
+  // var context = req.query.context;
+  var context = "Beginner who has never coded";
 
   var outputs = {};
 
   if (contentTypes.includes("Summary")) {
-    outputs["Summary"] = await Summary(topic);
+    outputs["Summary"] = await Summary(topic, context);
   }
   if (contentTypes.includes("FlashCards")) {
     outputs["FlashCards"] = await FlashCards(topic);
   }
   if (contentTypes.includes("Youtube")) {
-    outputs["Youtube"] = await Youtube(topic);
+    var [id, names] = await Youtube(topic);
+    outputs["Youtube"] = id;
+    outputs["YoutubeNames"] = names;
   }
   if (contentTypes.includes("Content")) {
     outputs["Content"] = await Content(topic);
