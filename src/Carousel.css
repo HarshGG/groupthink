@@ -23,6 +23,8 @@
     color: #fff; /* Change this to the desired text color */
     border: none;
     padding: 10px 15px;
+    margin-right: 20px;
+    margin-left: 15px;
     cursor: pointer;
     border-radius: 5px;
     font-size: large;
