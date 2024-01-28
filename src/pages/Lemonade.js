@@ -53,13 +53,15 @@ function MyComponent() {
 
     addDoc(ref, data);
 
+    createCourse();
+
   }
 
 
   
   const _next = async () => {
 
-    if(currentStep === 3) {
+    if(currentStep === 2) {
       setFormData({ ...formData, question1: 'Loading...', question2: 'Loading...' });
       const { topic, background } = formData
       const questionInputData = {
@@ -84,7 +86,7 @@ function MyComponent() {
         .catch(error => console.error('Error:', error));
     }
 
-    let newStep = currentStep >= totalScreens - 1 ? totalScreens : currentStep + 1
+    let newStep = currentStep >= totalScreens - 1 ? totalScreens - 1 : currentStep + 1
     setCurrentStep(newStep);
   }
     
@@ -111,7 +113,7 @@ function MyComponent() {
 
 
   const nextButton = () => {
-    if(currentStep < totalScreens){
+    if(currentStep < totalScreens - 1){
       return (
         <button 
           className="btn btn-primary float-right" 
@@ -169,13 +171,30 @@ function MyComponent() {
     }
   };
 
+  const createCourse = () => {
+    console.log("GO TO NEXT PAGE");
+  }
+
+  const submitButton = () => {
+    if (currentStep !== totalScreens - 1) {
+      return null;      
+    }
+    return (
+      <button 
+        className="btn btn-help float-right" 
+        type="submit" onClick={handleSubmit}>
+        Create
+      </button>
+    );
+  }
+
   console.log(formData)
 
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
         <QuestionCard question={getQuestion()} handleChange={handleChange} previousButton={previousButton()} nextButton={nextButton()} formData={formData} currentStep={currentStep} 
-          key={Object.keys(formData)[currentStep]} value={getValue()} identifier={getIdentifier()}
+          key={Object.keys(formData)[currentStep]} value={getValue()} identifier={getIdentifier()} submitButton={submitButton()}
         />
       </form>
       <button className="help-button">Help</button>
@@ -199,8 +218,11 @@ function QuestionCard (props) {
           onChange={props.handleChange}
         />
       </div>
-      {props.previousButton}
-      {props.nextButton}
+      <div class="buttonsContainer">
+        {props.previousButton}
+        {props.nextButton}
+        {props.submitButton}
+      </div>
     </div>
   );
 }

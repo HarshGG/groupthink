@@ -8,8 +8,13 @@
   }
   
   .content {
+    margin-top: 30%;
     text-align: center;
-    width: 50%;
+  }
+
+  .buttonsContainer {
+    align-items: center;
+    justify-content: space-between;
   }
   
   .radio-buttons {
@@ -68,3 +73,9 @@
     bottom: 20px;
     right: 20px;
   }
+
+  input {
+    padding: 30px;
+    font-size: large;
+  }
+  
