@@ -16,9 +16,11 @@ const PORT = 3001;
 
 
 // Create an instance of OpenAI
+/*
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
+*/
 
 
 asst_id = "";

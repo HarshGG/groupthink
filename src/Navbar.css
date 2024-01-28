@@ -68,7 +68,7 @@ body {
       position: absolute;
       top: 60px;
       left: 0;
-      background-color: transparent;
+      background-color: black;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       text-align: center; /* Center the items */
       padding-left: 0px;
@@ -89,6 +89,10 @@ body {
       
       .nav-item a:hover {
         background-color: rgba(255, 255, 255, 0.5); /* Adjust the alpha value for transparency */
+        margin-left: 5%;
+        margin-right: 5%;
+        padding-top: 3%;
+        padding-bottom: 3%;
       }
   
     .nav-icon {

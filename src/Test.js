@@ -7,13 +7,20 @@ function Test() {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
 
-    const opts = {
+    var opts = {
         height: '400',
         width: '600',
         playerVars: {
             autoplay: 0, // Change to 1 if you want the video to autoplay
         },
     };
+
+    const responsiveOpts = {
+        height: '200', // Adjust as needed
+        width: '300',  // Adjust as needed
+    };
+
+    opts = window.innerWidth < 768 ? responsiveOpts : opts;
 
     useEffect(() => {
         const fetchData = async () => {
