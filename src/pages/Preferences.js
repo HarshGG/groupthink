@@ -79,7 +79,32 @@ class Preferences extends React.Component {
               });
           })
           .catch(error => console.error('Error:', error));
-      }
+      } else if (currentStep === 5) {
+          const { name, topic, background, question1, answer1, question2, answer2 } = this.state
+          const topicDataInput = {
+            name: name, 
+            topic: topic, 
+            background: background, 
+            question1: question1, 
+            question2: question2, 
+            answer1: answer1, 
+            answer2: answer2
+          };
+          await fetch("http://localhost:3001/api/getTopicData", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+              },
+            body: JSON.stringify(topicDataInput),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                localStorage.setItem('content', JSON.stringify(data));
+            })
+            .catch(error => console.error('Error:', error));
+
+        }
 
       currentStep = currentStep >= totalScreens - 1 ? totalScreens : currentStep + 1
       this.setState({
@@ -145,7 +170,7 @@ class Preferences extends React.Component {
       answer1: answer1, 
       answer2: answer2
     };
-    await fetch("https://localhost:3000/api/getTopicData", {
+    await fetch("https://localhost:3001/api/getTopicData", {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -160,46 +185,52 @@ class Preferences extends React.Component {
     }
     
     render() {    
+      const isFinalStep = this.state.currentStep > 5;
+
       return (
         <React.Fragment>
-        <h1>React Wizard Form 🧙‍♂️</h1>
-        <p>Screen {this.state.currentStep} </p> 
-  
-        <form onSubmit={this.handleSubmit}>
-        {/* 
-          render the form steps and pass required props in
-        */}
-          <Screen1 
-            currentStep={this.state.currentStep} 
-            handleChange={this.handleChange}
-            name={this.state.name}
-          />
-          <Screen2 
-            currentStep={this.state.currentStep} 
-            handleChange={this.handleChange}
-            topic={this.state.topic}
-          />
-          <Screen3 
-            currentStep={this.state.currentStep} 
-            handleChange={this.handleChange}
-            background={this.state.background}
-          />
-          <Screen4 
-            currentStep={this.state.currentStep} 
-            handleChange={this.handleChange}
-            answer1={this.state.answer1}
-            question1={this.state.question1}
-          />
-          <Screen5 
-            currentStep={this.state.currentStep} 
-            handleChange={this.handleChange}
-            answer2={this.state.answer2}
-            question2={this.state.question2}
-          />
-          {this.previousButton()}
-          {this.nextButton()}
-  
-        </form>
+          <h1>React Wizard Form 🧙‍♂️</h1>
+          {!isFinalStep && (
+            <>
+              <p>Screen {this.state.currentStep}</p>
+              <form onSubmit={this.handleSubmit}>
+              <Screen1 currentStep={this.state.currentStep} 
+                handleChange={this.handleChange}
+                name={this.state.name}
+              />
+              <Screen2 
+                currentStep={this.state.currentStep} 
+                handleChange={this.handleChange}
+                topic={this.state.topic}
+              />
+              <Screen3 
+                currentStep={this.state.currentStep} 
+                handleChange={this.handleChange}
+                background={this.state.background}
+              />
+              <Screen4 
+                currentStep={this.state.currentStep} 
+                handleChange={this.handleChange}
+                answer1={this.state.answer1}
+                question1={this.state.question1}
+              />
+              <Screen5 
+                currentStep={this.state.currentStep} 
+                handleChange={this.handleChange}
+                answer2={this.state.answer2}
+                question2={this.state.question2}
+              />
+                {this.previousButton()}
+                {this.nextButton()}
+              </form>
+            </>
+          )}
+          {isFinalStep && (
+            // Render your new component with navigate button here
+            <Link to={{
+              pathname: "/courses",
+            }}>Go to home</Link>
+          )}
         </React.Fragment>
       );
     }
@@ -303,12 +334,6 @@ class Preferences extends React.Component {
           onChange={props.handleChange}
           />      
       </div>
-
-      {/* <button className="btn btn-success btn-block">Sign up</button> */}
-      <Link to={{
-        pathname: "/courses",
-        state: {myState: 'ljdfhsdljf'}
-      }}>Go to home</Link>
       </React.Fragment>
     );
   }
