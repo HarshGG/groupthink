@@ -1,8 +1,8 @@
-// src/Room.js
+// src/CourseList.js
 import React, { useState } from 'react';
-import './Room.css'; // This file is for your styles
+import './CourseList.css'; // This file is for your styles
 
-function Room() {
+function CourseList({pageTitle, thumbnails}) {
   const [name, setName] = useState(''); // Using useState to handle the name input
 
   const handleInputChange = (event) => {
@@ -16,12 +16,18 @@ function Room() {
   };
 
   return (
-    <div className="Room">
-      <header className="Room-header">
-        <h1>This is my room</h1>
+    <div className="CourseList">
+      <header className="CourseList-header">
+        <h1>{pageTitle}</h1>
       </header>
+      <div className="courses"> 
+        {/* <CourseThumbnail courseName="NumPy" />
+        <CourseThumbnail courseName="Finance" />
+        <CourseThumbnail courseName="Business Law" /> */}
+        {thumbnails.map((thumbnail, index) => (thumbnail))}
+      </div>
     </div>
   );
 }
 
-export default Room;
+export default CourseList;
