@@ -1,14 +1,21 @@
 // src/CourseList.js
 import React, { useState } from 'react';
 import './CourseList.css'; // This file is for your styles
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import CourseThumbnail from './CourseThumbnail';
 
 function CourseList({pageTitle, thumbnails}) {
   const [name, setName] = useState(''); // Using useState to handle the name input
   let location = useLocation();
 
-  const s = location.state.myState;
+  let content = JSON.parse(localStorage.getItem('content'));
+  if(!content) {
+    content = {};
+  }
+
+  let handleClick = (courseName) => {
+    localStorage.setItem(JSON.stringify({selectedTopic: courseName}));
+  }
 
   const handleInputChange = (event) => {
     setName(event.target.value); // Update the name state when input changes
@@ -29,8 +36,7 @@ function CourseList({pageTitle, thumbnails}) {
         {/* <CourseThumbnail courseName="NumPy" />
         <CourseThumbnail courseName="Finance" />
         <CourseThumbnail courseName="Business Law" /> */}
-        {thumbnails.map((thumbnail, index) => (thumbnail))}
-        <p>{s}</p>
+        {Object.keys(content).map((subtopic, i) => (<Link to="/course" onClick={() => {this.handleClick(content[subtopic])}}><CourseThumbnail courseName={content[subtopic]} /></Link>))}
       </div>
     </div>
   );
