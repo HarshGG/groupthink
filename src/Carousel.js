@@ -2,9 +2,14 @@
 import React, { useState } from 'react';
 import './Carousel.css'; // Import the CSS file
 
-const Carousel = () => {
-    const questions = ["What is numpy", "Question 2", "Question 3"];
-    const answers = ["some random python library", "Answer 2", "Answer 3"];
+const Carousel = (props) => {
+    const [questions, setQuestions] = useState(["What is numpy", "Question 2", "Question 3"]);
+    const [answers, setAnswers] = useState(["some random python library", "Answer 2", "Answer 3"]);
+
+    if(props.questions != null){
+        setQuestions(props.questions);
+        setAnswers(props.answers);
+    }
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);

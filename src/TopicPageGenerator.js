@@ -3,12 +3,14 @@ import TopicPage from './TopicPage';
 
 function TopicPageGenerator() {
   const [data, setData] = useState(null);
+  const [title, setTitle] = useState("titl")
 
   useEffect(() => {
     async function fetchData() {
       let content = JSON.stringify(JSON.parse(localStorage.getItem('content'))['Content']);
-      console.log(content)
       let index = localStorage.getItem('selectedTopic');
+    //   console.log(JSON.parse(localStorage.getItem('content'))['Content'][index])
+      setTitle(JSON.parse(localStorage.getItem('content'))['Content'][index]);
       let background = localStorage.getItem('background');
 
       let postData = { headlines: content, number: index, background: background };
@@ -35,7 +37,7 @@ function TopicPageGenerator() {
   // Render only if data is available
   if (data) {
     return (
-      <TopicPage pageTitle="test" summaryContents={["one"]} summarySubtitles={[data]} />
+      <TopicPage pageTitle={title} summaryContents={[""]} summarySubtitles={[data]} />
     );
   } else {
     return <div>Loading...</div>; // Or any other loading state

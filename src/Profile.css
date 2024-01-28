@@ -7,7 +7,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-  h1, h2 {
+  h1, h2, h3 {
     text-align: center;
   }
   
@@ -64,6 +64,7 @@
   .skills-list {
     display: flex;
     flex-wrap: wrap;
+    row-gap: 15px;
   }
   
   .left {
