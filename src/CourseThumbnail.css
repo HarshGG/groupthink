@@ -38,4 +38,14 @@ small {font-size: 0.750rem; /* 12px */}
 .CourseThumbnail {
     border: 1px solid var(--primary);
     border-radius: 10px;
+    margin-bottom: 1em;
+    max-width: 500px;
+    width: 100%;
+}
+
+.courseName {
+    padding-left: 5px;
+    margin: 1rem;
+    text-align: left;
+    font-weight: 400;
 }

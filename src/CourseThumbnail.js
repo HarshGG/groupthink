@@ -1,13 +1,11 @@
 // src/CourseThumbnail.js
 import './CourseThumbnail.css'; // This file is for your styles
 
-function CourseThumbnail() {
+function CourseThumbnail({courseName}) {
 
   return (
     <div className="CourseThumbnail">
-      <header className="CourseThumbnail-header">
-        <h2>This is my course thumbnail</h2>
-      </header>
+        <h4 className="courseName">{courseName}</h4>
     </div>
   );
 }

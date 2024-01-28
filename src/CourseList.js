@@ -19,9 +19,13 @@ function CourseList() {
   return (
     <div className="CourseList">
       <header className="CourseList-header">
-        <h1>This is my room</h1>
-        <CourseThumbnail />
+        <h1>Courses</h1>
       </header>
+      <div className="courses"> 
+        <CourseThumbnail courseName="NumPy" />
+        <CourseThumbnail courseName="Finance" />
+        <CourseThumbnail courseName="Business Law" />
+      </div>
     </div>
   );
 }

@@ -41,7 +41,6 @@ small {font-size: 0.750rem; /* 12px */}
 
 .CourseList-header {
   background-color: var(--background);
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -69,4 +68,11 @@ button {
 
 button:hover {
   background-color: var(--secondary);
+}
+
+.courses {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
 }
