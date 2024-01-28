@@ -9,6 +9,7 @@ import Room from "./Room";
 import Test from './Test';
 import Navbar from './Navbar';
 import Lemonade from "./pages/Lemonade"
+import LemonadeNew from "./pages/LemonadeNew"
 
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(
@@ -26,6 +27,7 @@ root.render(
       <Route path="/room" element={<Room />} />
       <Route path="/test" element={<Test />} />
       <Route path="/lemonade" element={<Lemonade />} />
+      <Route path="/lemonadenew" element={<LemonadeNew />} />
     </Routes>
   </Router>,
 

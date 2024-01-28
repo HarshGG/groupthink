@@ -22,9 +22,25 @@ function MyComponent() {
   const handleChange = event => {
     const {name, value} = event.target
     console.log("BEFORE: ", formData)
+    console.log("NAME, VALUE: ", name, value)
+    
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
+      
+    })    
+    console.log("AFTER: ", formData)
+  }
+
+  const handleChange2 = event => {
+    const {name, value} = event.target
+    console.log("BEFORE: ", formData)
+    console.log("NAME, VALUE: ", name, value)
+    
+    setFormData({
+      ...formData,
+      [name]: value,
+      
     })    
     console.log("AFTER: ", formData)
   }
@@ -60,7 +76,7 @@ function MyComponent() {
   const _next = async () => {
 
     if(currentStep === 3) {
-      setFormData({ ...formData, question1: 'Loading...', question2: 'Loading...' });
+      setFormData({ question1: 'Loading...', question2: 'Loading...' });
       const { topic, background } = formData
       const questionInputData = {
         topic: topic,
@@ -76,7 +92,6 @@ function MyComponent() {
         .then(response => response.json())
         .then(data => {
             setFormData({
-                ...formData,
                 question1: data.q1,
                 question2: data.q2,
             });
@@ -89,7 +104,7 @@ function MyComponent() {
   }
     
   const _prev = () => {
-    let newStep = currentStep <= 1? 1: currentStep - 1
+    let newStep = currentStep <= 0? 0: currentStep - 1
     setCurrentStep(newStep);
   };
 
@@ -174,29 +189,54 @@ function MyComponent() {
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
-        <QuestionCard question={getQuestion()} handleChange={handleChange} previousButton={previousButton()} nextButton={nextButton()} formData={formData} currentStep={currentStep} 
-          key={Object.keys(formData)[currentStep]} value={getValue()} identifier={getIdentifier()}
+        <NameQuestionCard 
+          name={formData.name} 
+          onChange={handleChange} 
+          previousButton={previousButton()} 
+          nextButton={nextButton()}
+          currentStep={currentStep}
         />
+        <TopicQuestionCard 
+          topic={formData.topic} 
+          onChange={handleChange} 
+          previousButton={previousButton()} 
+          nextButton={nextButton()}
+          currentStep={currentStep}
+        />
+        <BackgroundQuestionCard 
+          background={formData.background} 
+          onChange={handleChange} 
+          previousButton={previousButton()} 
+          nextButton={nextButton()}
+          currentStep={currentStep}
+        />
+
+        
+        {/* <QuestionCard question={getQuestion()} handleChange={handleChange} previousButton={previousButton()} nextButton={nextButton()} formData={formData} currentStep={currentStep} 
+          key={Object.keys(formData)[currentStep]} value={getValue()} identifier={getIdentifier()}
+        /> */}
       </form>
       <button className="help-button">Help</button>
     </div>
   );
 }
 
-function QuestionCard (props) { 
+function NameQuestionCard (props) { 
+  if (props.currentStep !== 0) {
+    return null;
+  }
   return (
     <div className="content">
       <h1>Your Preferences</h1>
-      <p>{props.question}</p>
+      <p>What's your name?</p>
       <div className="radio-buttons">
-        {/* <label htmlFor={key}>Name</label> */}
         <input
           className="form-control"
-          id={props.identifier}
-          name={props.identifier}
+          id="name"
+          name="name"
           type="text"
           placeholder="Type here"
-          onChange={props.handleChange}
+          onChange={props.onChange}
         />
       </div>
       {props.previousButton}
@@ -204,5 +244,55 @@ function QuestionCard (props) {
     </div>
   );
 }
+
+function TopicQuestionCard (props) { 
+  if (props.currentStep !== 1) {
+    return null;
+  }
+  return (
+    <div className="content">
+      <h1>Your Preferences</h1>
+      <p>What's your topic?</p>
+      <div className="radio-buttons">
+        <input
+          className="form-control"
+          id="topic"
+          name="topic"
+          type="text"
+          placeholder="Type here"
+          onChange={props.onChange}
+        />
+      </div>
+      {props.previousButton}
+      {props.nextButton}
+    </div>
+  );
+}
+
+function BackgroundQuestionCard (props) { 
+  if (props.currentStep !== 2) {
+    return null;
+  }
+  return (
+    <div className="content">
+      <h1>Your Preferences</h1>
+      <p>What's your background?</p>
+      <div className="radio-buttons">
+        <input
+          className="form-control"
+          id="background"
+          name="background"
+          type="text"
+          placeholder="Type here"
+          onChange={props.onChange}
+        />
+      </div>
+      {props.previousButton}
+      {props.nextButton}
+    </div>
+  );
+}
+
+
 
 export default MyComponent;
